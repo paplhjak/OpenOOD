@@ -143,6 +143,9 @@ evaluator = Evaluator(
     shuffle=False,
     num_workers=8)
 
+if args.jit_path is not None:
+    postprocessor_name = args.jit_path.split('vs_')[1].split('.pkl')[0] + postprocessor_name
+
 # load pre-computed scores if exists
 if os.path.isfile(os.path.join(root, 'scores', f'{postprocessor_name}.pkl')):
     with open(os.path.join(root, 'scores', f'{postprocessor_name}.pkl'),
