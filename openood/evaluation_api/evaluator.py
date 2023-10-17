@@ -306,7 +306,7 @@ class Evaluator:
             self.metrics[task] = pd.DataFrame(
                 np.concatenate([near_metrics, far_metrics], axis=0),
                 index=list(self.dataloader_dict['ood']['near'].keys()) +
-                ['nearood'] + list(self.dataloader_dict['ood']['far'].keys()) +
+                ['nearood'] + list(self.dataloader_dict['ood']['far'].keys())   +
                 ['farood'],
                 columns=['FPR@95', 'AUROC', 'AUPR_IN', 'AUPR_OUT', 'ACC'],
             )
