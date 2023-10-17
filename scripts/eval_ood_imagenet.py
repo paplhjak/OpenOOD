@@ -126,6 +126,7 @@ else:
 
 if args.jit_path is not None:
     net = torch.jit.load(args.jit_path)
+    postprocessor_name = args.jit_path.split('vs_')[1].split('.pkl')[0] + postprocessor_name
 
 net.cuda()
 net.eval()
@@ -142,9 +143,6 @@ evaluator = Evaluator(
     batch_size=args.batch_size,  # for certain methods the results can be slightly affected by batch size
     shuffle=False,
     num_workers=8)
-
-if args.jit_path is not None:
-    postprocessor_name = args.jit_path.split('vs_')[1].split('.pkl')[0] + postprocessor_name
 
 # load pre-computed scores if exists
 if os.path.isfile(os.path.join(root, 'scores', f'{postprocessor_name}.pkl')):
