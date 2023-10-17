@@ -126,7 +126,7 @@ else:
 
 if args.jit_path is not None:
     net = torch.jit.load(args.jit_path)
-    postprocessor_name = args.jit_path.split('vs_')[1].split('.pkl')[0] + postprocessor_name
+    postprocessor_name = args.jit_path.split('vs')[1].split('.pkl')[0] + postprocessor_name
 
 net.cuda()
 net.eval()
