@@ -15,6 +15,7 @@ from .gradnorm_postprocessor import GradNormPostprocessor
 from .gram_postprocessor import GRAMPostprocessor
 from .kl_matching_postprocessor import KLMatchingPostprocessor
 from .knn_postprocessor import KNNPostprocessor
+from .likelihood_estimator_postprocessor import LikelihoodEstimatorPostprocessor
 from .maxlogit_postprocessor import MaxLogitPostprocessor
 from .mcd_postprocessor import MCDPostprocessor
 from .mcm_postprocessor import MCMPostprocessor

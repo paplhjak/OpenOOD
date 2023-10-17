@@ -23,6 +23,7 @@ from openood.networks.godin_net import GodinNet
 from openood.networks.rot_net import RotNet
 from openood.networks.cider_net import CIDERNet
 
+torch.multiprocessing.set_sharing_strategy('file_system')
 
 def update(d, u):
     for k, v in u.items():
@@ -40,6 +41,7 @@ parser.add_argument('--arch',
 parser.add_argument('--tvs-version', default=1, choices=[1, 2])
 parser.add_argument('--ckpt-path', default=None)
 parser.add_argument('--tvs-pretrained', action='store_true')
+parser.add_argument('--jit_path', default=None)
 parser.add_argument('--postprocessor', default='msp')
 parser.add_argument('--save-csv', action='store_true')
 parser.add_argument('--save-score', action='store_true')
@@ -122,6 +124,9 @@ else:
     else:
         raise NotImplementedError
 
+if args.jit_path is not None:
+    net = torch.jit.load(args.jit_path)
+
 net.cuda()
 net.eval()
 
@@ -134,8 +139,7 @@ evaluator = Evaluator(
     preprocessor=preprocessor,  # default preprocessing
     postprocessor_name=postprocessor_name,
     postprocessor=postprocessor,
-    batch_size=args.
-    batch_size,  # for certain methods the results can be slightly affected by batch size
+    batch_size=args.batch_size,  # for certain methods the results can be slightly affected by batch size
     shuffle=False,
     num_workers=8)
 

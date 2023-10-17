@@ -116,6 +116,9 @@ class Evaluator:
 
         # postprocessor setup
         postprocessor.setup(net, dataloader_dict['id'], dataloader_dict['ood'])
+        
+        #print(dataloader_dict['ood']['far']['texture'].dataset.imglist)
+        #exit()
 
         self.id_name = id_name
         self.net = net
@@ -171,6 +174,8 @@ class Evaluator:
         all_labels = []
         with torch.no_grad():
             for batch in tqdm(data_loader, desc=msg, disable=not progress):
+                print('classifier_inference', batch)
+                exit()
                 data = batch['data'].cuda()
                 logits = self.net(data)
                 preds = logits.argmax(1)
@@ -207,6 +212,7 @@ class Evaluator:
                 correct, total = 0, 0
                 for _, (dataname, dataloader) in enumerate(
                         self.dataloader_dict['csid'].items()):
+                    
                     if self.scores['csid_preds'][dataname] is None:
                         all_preds, all_labels = self._classifier_inference(
                             dataloader, f'CSID {dataname} Acc Eval')

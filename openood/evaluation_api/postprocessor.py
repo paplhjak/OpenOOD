@@ -14,7 +14,7 @@ from openood.postprocessors import (
     SSDPostprocessor, TemperatureScalingPostprocessor, VIMPostprocessor,
     RotPredPostprocessor, RankFeatPostprocessor, RMDSPostprocessor,
     SHEPostprocessor, CIDERPostprocessor, NPOSPostprocessor,
-    GENPostprocessor)
+    GENPostprocessor, LikelihoodEstimatorPostprocessor)
 from openood.utils.config import Config, merge_configs
 
 postprocessors = {
@@ -38,6 +38,7 @@ postprocessors = {
     'mds': MDSPostprocessor,
     'gram': GRAMPostprocessor,
     'cutpaste': CutPastePostprocessor,
+    'lhood': LikelihoodEstimatorPostprocessor,
     'mls': MaxLogitPostprocessor,
     'residual': ResidualPostprocessor,
     'klm': KLMatchingPostprocessor,
@@ -69,7 +70,7 @@ def get_postprocessor(config_root: str, postprocessor_name: str,
     if not os.path.exists(postprocessor_config_path):
         os.makedirs(os.path.dirname(postprocessor_config_path), exist_ok=True)
         urllib.request.urlretrieve(link_prefix + f'{postprocessor_name}.yml',
-                                   postprocessor_config_path)
+                                postprocessor_config_path)
 
     config = Config(postprocessor_config_path)
     config = merge_configs(config,
