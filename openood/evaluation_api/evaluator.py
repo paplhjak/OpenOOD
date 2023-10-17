@@ -117,9 +117,6 @@ class Evaluator:
         # postprocessor setup
         postprocessor.setup(net, dataloader_dict['id'], dataloader_dict['ood'])
         
-        #print(dataloader_dict['ood']['far']['texture'].dataset.imglist)
-        #exit()
-
         self.id_name = id_name
         self.net = net
         self.preprocessor = preprocessor
@@ -259,6 +256,7 @@ class Evaluator:
                 id_pred, id_conf, id_gt = self.postprocessor.inference(
                     self.net, self.dataloader_dict['id']['test'], progress)
                 self.scores['id']['test'] = [id_pred, id_conf, id_gt]
+                self.scores['id']['test_paths'] = self.dataloader_dict['id']['test'].dataset.imglist
             else:
                 id_pred, id_conf, id_gt = self.scores['id']['test']
 
@@ -342,6 +340,7 @@ class Evaluator:
                 self.scores['ood'][ood_split][dataset_name] = [
                     ood_pred, ood_conf, ood_gt
                 ]
+                self.scores['ood'][ood_split][dataset_name+'_paths'] = ood_dl.dataset.imglist
             else:
                 print(
                     'Inference has been performed on '
